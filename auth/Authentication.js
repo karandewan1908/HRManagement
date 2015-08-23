@@ -7,6 +7,7 @@
  */
 var WorkingUser = require('../controller/WorkingUser');
 
+var capability = require('./Capability');
 
 
 function authenticate(userid,cb) {
@@ -38,4 +39,15 @@ function authenticate(userid,cb) {
 }
 module.exports.authenticate = authenticate; 
 
+
+function canUserPerformAction(user,options,cb) {
+  
+  var ret = false;
+  
+  
+  return ret;
+  
+  
+}
+module.exports.canUserPerformAction = canUserPerformAction;
 

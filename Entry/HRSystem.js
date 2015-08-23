@@ -39,7 +39,7 @@ function handleRequest(request,response) {
   
   var ubits = url.split("/");
   
-  if(ubits.length < 1) {
+  if(ubits.length < 3) {
     response.end("Invalid request!!");
     return;
   }
@@ -73,13 +73,37 @@ function makeAuthCB(param) {
       return;
     }
     
-    response.end("Valid user!!");
+    //lets do one more thing here..
     
+    var opts = {};
+    
+    opts.action = param.ubits[2];
+    
+    opts.entity = param.ubits[3];
+    
+    auth.canUserPerformAction(user,opts,makePermissionAccessCB(user,param));
     
     
   }
   
   return callBack;
+  
+}
+
+
+function makePermissionAccessCB(user,params) {
+  
+  function callBack(err,auth) {
+    
+    //we will get response here and we will move forward only when authenticated to perform the 
+    //action..
+    
+    
+    
+    
+  }
+  return callback;
+  
   
 }
 
