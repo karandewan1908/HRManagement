@@ -16,13 +16,21 @@ function authenticate(userid,cb) {
   
   //lets get user from database for the userid and user permissions..
  
-  
-  WorkingUser.populate("55d9d410585025845d4b5cc7",workingUserCb);
-  
-  function workingUserCb(wu) {
+  if(!userid) {
+    console.trace();
+    console.error("ERR- Inavlid userid");
     
     if(cb) {
-      cb(wu);
+      cb(new Error("ERR - Invalid userid"));
+    }
+  }
+
+  WorkingUser.populate(userid,workingUserCb);
+  
+  function workingUserCb(err,wu) {
+   
+    if(cb) {
+      cb(err,wu);
     }
     
   }

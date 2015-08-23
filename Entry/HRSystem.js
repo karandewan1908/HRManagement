@@ -37,12 +37,11 @@ function handleRequest(request,response) {
   
   var url = request.url;
   
-  console.log(url);
-  
   var ubits = url.split("/");
   
-  if(ubits.length < 3) {
+  if(ubits.length < 1) {
     response.end("Invalid request!!");
+    return;
   }
   
   var cbParam = {};
@@ -53,15 +52,29 @@ function handleRequest(request,response) {
   
   cbParam.request = request;
   
-  auth.authenticate(ubits[0],makeAuthCB(cbParam));
+  auth.authenticate(ubits[1],makeAuthCB(cbParam));
   
 }
 
 
 function makeAuthCB(param) {
   
-  function callBack() {
+  function callBack(err, user) {
    
+    var response = param.response; 
+    if(err) {
+      console.log(err);
+      response.end(err.message);
+      return;
+    }
+    
+    if(!user) {
+      response.end("ERR - Invalid user");
+      return;
+    }
+    
+    response.end("Valid user!!");
+    
     
     
   }

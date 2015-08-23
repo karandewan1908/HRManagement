@@ -6,6 +6,7 @@
 
 var dbQuerymanager = require('../database/DatabaseQueryManager');
 var tables = require('../database/DBTable');
+var workinguser = require('../datastructure/WorkingUser');
 
 var Util = require('../util/Utilities');
 
@@ -21,7 +22,12 @@ function populate(userid,cb) {
   
   query.obj = {};
   
-  query.obj._id = Util.toObjectID("55d9d24d585025845d4b5cc5");
+  if(!userid || userid.length < 12) {
+    receiveCB(new Error("Invalid user id"));
+    return;
+  }
+  
+  query.obj._id = Util.toObjectID(userid);
     
   dbQuerymanager.selectUniqueTuple(query,receiveCB);
   
@@ -34,7 +40,17 @@ function makeUserDataReceiveCB(userid,cb) {
   
   function gotUserData(err,data) {
   
-    console.log(data);
+    var user = null;
+    if(data) {
+      //we got valid data lets now just make the user object
+      user = new workinguser(data);
+      
+    }
+    
+    if(cb) {
+      cb(err,user);
+    }
+    
     
   }
   return gotUserData;

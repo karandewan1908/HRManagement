@@ -4,22 +4,43 @@
  */
 
 
-function WokringUser(userid, permissions) {
+function WokringUser(data) {
   
   
   var me = this;
   
+  var validUser = false;
+  
+  if(data) {
+   validUser = true; 
+   console.log("ye sss");
+  }
+  
+  function getProperty(prop) {
+    
+    var ret = null;
+    
+    if(data[prop]) {
+      ret = data[prop];
+    }
+    
+    return ret;
+  }
+  me.getProperty = getProperty;
+  
+  
   function hasPermission(perm) {
     var ret = false;
     
-    
-    
     return ret;
-    
     
   }
   me.hasPermission = hasPermission;
   
+  function isValidUser() {
+    return validUser;
+  }
+  me.isValidUser = isValidUser;
   
   
   
