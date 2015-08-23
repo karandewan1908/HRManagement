@@ -6,8 +6,7 @@
  * user is allowed to perform action he/she trying to do..
  */
 var WorkingUser = require('../controller/WorkingUser');
-
-var capability = require('./Capability');
+var Role = require('../controller/Role');
 
 
 function authenticate(userid,cb) {
@@ -30,8 +29,16 @@ function authenticate(userid,cb) {
   
   function workingUserCb(err,wu) {
    
-    if(cb) {
-      cb(err,wu);
+    if(wu && wu.isValidUser) {
+      
+      populateRole(wu,cb);
+      
+      
+    }else{
+      
+      if(cb) {
+        cb(err,wu);
+      }
     }
     
   }
@@ -40,13 +47,47 @@ function authenticate(userid,cb) {
 module.exports.authenticate = authenticate; 
 
 
+function populateRole(user,cb) {
+  
+  var roleid = user.getProperty("role");
+  
+  Role.populate(roleid,gotRole);
+  
+  function gotRole(err,role) {
+    
+    
+    if(err) {
+      console.log(err);
+    }
+    
+    if(role) {
+      
+      user.attachRole(role);
+    }
+    if(!role) {
+      console.log("ERR - Unable to populate role with id "+roleid);
+      err = new Error("ERR - Unable to poplute permission");
+    }
+    if(cb) {
+      cb(err,user);
+    }
+    
+  }
+  
+  
+  
+}
+
 function canUserPerformAction(user,options,cb) {
   
-  var ret = false;
+  
+    
+    
+  
   
   
   return ret;
-  
+
   
 }
 module.exports.canUserPerformAction = canUserPerformAction;

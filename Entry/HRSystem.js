@@ -12,7 +12,7 @@ var http = require('http');
 
 var conf = require('../conf/Configuration');
 
-var auth = require('../auth/Authentication');
+var processor = require('../handler/Requesthandler');
 
 var listenPort = conf.getHttpPort();
 
@@ -35,77 +35,29 @@ function dbConnectError() {
 
 function handleRequest(request,response) {
   
+  
   var url = request.url;
   
   var ubits = url.split("/");
   
-  if(ubits.length < 3) {
+  if(ubits.length < 4) {
     response.end("Invalid request!!");
     return;
   }
   
-  var cbParam = {};
   
-  cbParam.ubits = ubits;
   
-  cbParam.response = response;
+  var obj = {};
   
-  cbParam.request = request;
+  obj.request = request;
   
-  auth.authenticate(ubits[1],makeAuthCB(cbParam));
+  obj.response = response;
   
-}
-
-
-function makeAuthCB(param) {
-  
-  function callBack(err, user) {
-   
-    var response = param.response; 
-    if(err) {
-      console.log(err);
-      response.end(err.message);
-      return;
-    }
-    
-    if(!user) {
-      response.end("ERR - Invalid user");
-      return;
-    }
-    
-    //lets do one more thing here..
-    
-    var opts = {};
-    
-    opts.action = param.ubits[2];
-    
-    opts.entity = param.ubits[3];
-    
-    auth.canUserPerformAction(user,opts,makePermissionAccessCB(user,param));
-    
-    
-  }
-  
-  return callBack;
+  processor.handleRequest(obj);
   
 }
 
 
-function makePermissionAccessCB(user,params) {
-  
-  function callBack(err,auth) {
-    
-    //we will get response here and we will move forward only when authenticated to perform the 
-    //action..
-    
-    
-    
-    
-  }
-  return callback;
-  
-  
-}
 
 function listener() {
  console.log("HR management service started at port "+listenPort); 

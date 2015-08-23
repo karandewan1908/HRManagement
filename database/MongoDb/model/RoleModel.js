@@ -18,7 +18,7 @@ var RoleSchema = new Schema({
   allcapability:Boolean,    
   //if true then no restriction for this role otherwise role has restricted access 
   
-  restriction:[String]   
+  restriction:Schema.Types.Mixed   
   //define what all this role cannot access.. String should begin with entity name followed by underscor
   //for example to restric employee salary add employee_salary
 }  ,{collection: 'Role'} );
