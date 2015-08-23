@@ -21,6 +21,6 @@ var RoleSchema = new Schema({
   restriction:[String]   
   //define what all this role cannot access.. String should begin with entity name followed by underscor
   //for example to restric employee salary add employee_salary
-});
+}  ,{collection: 'Role'} );
 
-module.exports = mongoose.model('Role',RoleSchema);
+module.exports = mongoose.model('roles',RoleSchema);

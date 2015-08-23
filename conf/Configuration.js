@@ -19,7 +19,7 @@ module.exports.getDBPort = function() {
 }
 
 module.exports.projectName = function() {
-  return "HRManagement";
+  return "HRSystem";
 }
 
 

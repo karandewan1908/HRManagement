@@ -15,11 +15,9 @@ function authenticate(userid,cb) {
   //permission in that..
   
   //lets get user from database for the userid and user permissions..
+ 
   
-  
-  var user = new WorkingUser(userid);
-  
-  user.populate(workingUserCb);
+  WorkingUser.populate("55d9d410585025845d4b5cc7",workingUserCb);
   
   function workingUserCb(wu) {
     

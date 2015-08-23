@@ -37,20 +37,32 @@ function handleRequest(request,response) {
   
   var url = request.url;
   
+  console.log(url);
+  
   var ubits = url.split("/");
   
   if(ubits.length < 3) {
     response.end("Invalid request!!");
   }
   
-  auth.authenticate(ubits[0],makeAuthCB(ubits));
+  var cbParam = {};
+  
+  cbParam.ubits = ubits;
+  
+  cbParam.response = response;
+  
+  cbParam.request = request;
+  
+  auth.authenticate(ubits[0],makeAuthCB(cbParam));
   
 }
 
 
-function makeAuthCB(ubits) {
+function makeAuthCB(param) {
   
   function callBack() {
+   
+    
     
   }
   

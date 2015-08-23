@@ -44,15 +44,22 @@ function connectionError() {
 }
 
 
-function insertData(cb) {
+function insertData(data,cb) {
   
 }
+module.exports.insertData = insertData;
 
-function sleectData(cb) {
+//this is done for selecting the unique elements..
+function selectUniqueTuple(query,cb) {
   
+  db.findOne(query,cb);
+ 
 }
+module.exports.selectUniqueTuple = selectUniqueTuple;
+
 
 function deleteData(cb) {
   
 }
+module.exports.deleteData = deleteData;
 

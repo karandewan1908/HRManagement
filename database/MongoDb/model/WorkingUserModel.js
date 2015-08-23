@@ -15,6 +15,6 @@ var WorkingUserSchema = new Schema({
   
   apikey : String
  
-});
+},{collection: 'WorkingUser' });
 
 module.exports = mongoose.model('WorkingUser',WorkingUserSchema);
