@@ -11,7 +11,7 @@ function getDB(dbtype) {
   switch(dbtype) {
       
     case dbType.Mongo: 
-      ret = require('./MongoDb/MongoDB');
+      ret = require('./mongodb/MongoDB');
       break;
     }
     
