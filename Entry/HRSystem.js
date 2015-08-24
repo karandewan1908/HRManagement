@@ -41,7 +41,7 @@ function handleRequest(request,response) {
   var ubits = url.split("/");
   
   if(ubits.length < 4) {
-    response.end("Invalid request!!");
+    response.end("Invalid request!");
     return;
   }
   
